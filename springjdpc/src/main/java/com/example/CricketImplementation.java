@@ -1,6 +1,9 @@
 package com.example;
 
+import java.util.List;
+
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 
 public class CricketImplementation implements Cricket {
     private JdbcTemplate jdbcTemplate;
@@ -34,6 +37,22 @@ public class CricketImplementation implements Cricket {
             System.out.println("Delete Successfully...");
         }
         return result;
+    }
+
+    @Override
+    public Player getPlayer(int player_id) {
+        String query = "select * from cricket where id = ?";
+        RowMapper<Player> rowMapper = new RowMapperImplementation();
+        Player player = this.jdbcTemplate.queryForObject(query, rowMapper, player_id);
+        return player;
+    }
+
+    @Override
+    public List<Player> getAllPlayers() {
+        String query = "select * from cricket";
+        RowMapper<Player> rowMapper = new RowMapperImplementation();
+        List<Player> players = this.jdbcTemplate.query(query, rowMapper);
+        return players;
     }
 
     public JdbcTemplate getJdbcTemplate() {

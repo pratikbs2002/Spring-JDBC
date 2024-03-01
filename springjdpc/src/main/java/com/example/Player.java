@@ -38,4 +38,9 @@ public class Player {
         this.state = state;
     }
 
+    @Override
+    public String toString() {
+        return "Player [id=" + id + ", name=" + name + ", state=" + state + "]";
+    }
+
 }
